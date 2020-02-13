@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
+import SearchBar from './SearchBar';
 
-function App() {
+export default function App() {
+  const [searchResults, setSearchResult] = useState([]);
+  const search = async (searchValue) => {
+    try {
+      const response = await axios.get(`https://some-api.com/${searchValue}`);
+      setSearchResult(response);
+    } catch (error) {
+      console.error('Error fetching search result', error);
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchBar onSearch={search} />
+
+      <div>
+        {
+          searchResults.map((result) => (
+            <div key={result.id}>
+              {result.text}
+            </div>
+          ))
+        }
+      </div>
     </div>
   );
 }
-
-export default App;
