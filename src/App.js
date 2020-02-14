@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 
-export default function App() {
+const App = () => {
   const [searchResults, setSearchResult] = useState([]);
   const search = async (searchValue) => {
     try {
@@ -28,3 +28,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
